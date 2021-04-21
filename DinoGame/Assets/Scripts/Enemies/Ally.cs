@@ -29,8 +29,6 @@ public class Ally : MonoBehaviour
 	private Transform attackCheck;
 	public float dmgValue = 4;
 
-	public GameObject throwableObject;
-
 	private float randomDecision = 0;
 	private bool doOnceDecision = true;
 	private bool endDecision = false;
@@ -96,8 +94,6 @@ public class Ally : MonoBehaviour
 							Jump();
 						else if (randomDecision >= 0.6f && randomDecision < 0.8f)
 							StartCoroutine(Dash());
-						else if (randomDecision >= 0.8f && randomDecision < 0.95f)
-							RangeAttack();
 						else
 							Idle();
 					}
@@ -181,18 +177,6 @@ public class Ally : MonoBehaviour
 			}
 		}
 		StartCoroutine(WaitToAttack(0.5f));
-	}
-
-	public void RangeAttack()
-	{
-		if (doOnceDecision)
-		{
-			GameObject throwableProj = Instantiate(throwableObject, transform.position + new Vector3(transform.localScale.x * 0.5f, -0.2f), Quaternion.identity) as GameObject;
-			throwableProj.GetComponent<ThrowableProjectile>().owner = gameObject;
-			Vector2 direction = new Vector2(transform.localScale.x, 0f);
-			throwableProj.GetComponent<ThrowableProjectile>().direction = direction;
-			StartCoroutine(NextDecision(0.5f));
-		}
 	}
 
 	public void Run()
